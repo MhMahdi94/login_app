@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:form_validator/form_validator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //final  _formKey = GlobalKey<FormState>();
   final logo = Hero(
       tag: 'hero',
       child: CircleAvatar(
@@ -20,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       cursorColor: Color(0xff3f1313),
+      // validator: ValidationBuilder().email().maxLength(50).build(),
       decoration: InputDecoration(
         focusColor: Color(0xff3f1313),
         hintText: 'Email',
@@ -30,6 +33,13 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextFormField(
       autofocus: false,
       obscureText: true,
+      validator: (value) {
+        if (value!.isEmpty)
+          return null;
+        else
+          return "Password is required field";
+        //else if (value.length<)
+      },
       decoration: InputDecoration(
         hintText: 'Password',
         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -80,34 +90,41 @@ class _LoginPageState extends State<LoginPage> {
             //Spacer(),
             Text(
               'Welcome To Login App',
-              style: TextStyle(
-                color: Color(0xff3f1313),
-                fontSize: 32,
-              ),
+              style:
+                  TextStyle(color: Color(0xff3f1313), fontSize: 32, shadows: [
+                Shadow(
+                  offset: Offset(3.0, 9.0),
+                  blurRadius: 6.0,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )
+              ]),
             ),
             Spacer(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                email,
-                SizedBox(
-                  height: 16,
-                ),
-                password,
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    forgotLabel,
-                  ],
-                ),
-                loginButton,
-                SizedBox(
-                  height: 16,
-                ),
-              ],
+            Form(
+              //key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  email,
+                  SizedBox(
+                    height: 16,
+                  ),
+                  password,
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      forgotLabel,
+                    ],
+                  ),
+                  loginButton,
+                  SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
 
             Spacer()
